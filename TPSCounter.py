@@ -7,7 +7,7 @@ print (time.strftime("%H:%M:%S"))
 
 fileHandle = ""
 if len(sys.argv) != 2:
-	print ("Usage: GZIPReader.py <Gzip FileName>")
+	print ("Usage: tpsCounter.py <Gzip FileName>")
 	exit()
 
 fileSpec = sys.argv[1].split(".")
