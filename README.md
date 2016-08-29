@@ -11,7 +11,7 @@ It also takes out another string, say instanceName iiiiiiiiii, at instanceNameIn
 
 Then using the unique key as "ttttttt|iiiiiiiiii" it counts the occurences which makes up the logEntries per timeString "ttttttt" for instanceName "iiiiiiiiii"
 # Usage
-$(which python) tpsCounter.py <gz file name>
+$(which python) tpsCounter.py "gz file name"
 
 #Sample output:
 TPS of iiiiiiiiii :
