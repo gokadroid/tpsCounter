@@ -4,7 +4,8 @@ import operator
 import time
 import math
 
-print (time.strftime("%H:%M:%S"))
+print "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*"
+print (time.strftime("%H:%M:%S"), ": Script started")
 
 fileHandle = ""
 if len(sys.argv) != 2:
@@ -19,6 +20,7 @@ if 'gz' in fileSpec:
 if 'gz' not in fileSpec:
         fileHandle = open(sys.argv[1])
 
+print "Reading Logs From :", sys.argv[1]
 #this dcitionary contains all transaction per second per instance
 tpsDictionary = {}
 #this dictionar contains maximum transactions served by an instance
@@ -47,15 +49,17 @@ for line in fileHandle:
         #if (count < 1000 ):
                 #print (line)
         #index x has time and y has commonInstanceName and decode it to ascii as file is opened in binary mode
-        words = line.decode('ascii').split()
-                #print (words)
+#        words = line.decode('ascii').split()
+        words = line.decode('utf-8').split()
+        #print (words)
         #index 0 has time, 1 has millisec
         timeString = words[timeIndex].split(timeSplitter)
         #print (time[0])
         #build the dictionary key to store data for each second for each instance
-        tpsDictionaryKeyString = timeString[0]+"|"+words[instanceNameIndex]
+#        tpsDictionaryKeyString = timeString[0]+"|"+words[instanceNameIndex]
+        tpsDictionaryKeyString = timeString[0]+"|"+words[len(words) -1 ]
         #build keystring for the unique instance name list
-        instanceDictionaryKeyString = words[instanceNameIndex]
+        instanceDictionaryKeyString = words[len(words) -1]
         #print ( keyString )
         tpsDictionary[tpsDictionaryKeyString] = tpsDictionary.get(tpsDictionaryKeyString, 0) + 1
         instanceDictionary[instanceDictionaryKeyString] =instanceDictionary.get(instanceDictionaryKeyString, 0) + 1
@@ -76,7 +80,7 @@ instanceList = sorted(instanceDictionary.items(), key=lambda x:x[1])
 #print (instanceList )
 print (count)
 
-print (time.strftime("%H:%M:%S"))
+print (time.strftime("%H:%M:%S"), ": Built Indexes")
 for tuples in instanceList:
         #print (tuples)
         percentileList = []
@@ -102,5 +106,5 @@ for tuples in instanceList:
         print "98 %ile  : "+tuples[0]+"[",percentile98Index,"] = ", percentileList[percentile98Index]
         print "95 %ile  : "+tuples[0]+"[",percentile95Index,"] = ", percentileList[percentile95Index]
         print "90 %ile  : "+tuples[0]+"[",percentile90Index,"] = ", percentileList[percentile90Index]
-print (time.strftime("%H:%M:%S"))
+print (time.strftime("%H:%M:%S"), ": Script complete!")
 print "Total", count,  "lines of ", sys.argv[1], "traversed"
