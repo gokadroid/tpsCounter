@@ -47,7 +47,7 @@ for line in fileHandle:
         #if (count < 1000 ):
                 #print (line)
         #index x has time and y has commonInstanceName and decode it to ascii as file is opened in binary mode
-        words = line.decode('ascii').split()
+        words = line.decode('ascii').split(lineSplitter)
                 #print (words)
         #index 0 has time, 1 has millisec
         timeString = words[timeIndex].split(timeSplitter)
